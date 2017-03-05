@@ -130,6 +130,16 @@ class Workout {
     private $privacyWorkout;
 
     /**
+     * @var string
+     */
+    private $title;
+
+    /**
+     * @var array
+     */
+    private $hashtags;
+
+    /**
      * Create Endomondo workout.
      *
      * Workout constructor.
@@ -452,6 +462,42 @@ class Workout {
     public function getWorkoutPrivacy()
     {
         return $this->privacyWorkout;
+    }
+
+    /**
+     * @param $title string
+     * @return $this
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param $hashtags array
+     * @return $this
+     */
+    public function setHastags($hashtags)
+    {
+        $this->hashtags = $hashtags;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getHashtags()
+    {
+        return $this->hashtags;
     }
 
     /**
