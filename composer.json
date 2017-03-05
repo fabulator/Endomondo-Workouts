@@ -1,0 +1,16 @@
+{
+    "name": "fabulator/endomondo-workouts",
+    "description": "Endomondo workouts.",
+    "authors": [
+        {
+            "name": "Michal Ozogán",
+            "email": "michal@ozogan.eu"
+        }
+    ],
+	"require": {
+		"PHP" : ">=5.5"
+	},
+	"autoload": {
+		"psr-0": { "Fabulator": "lib/" }
+	}
+}
