@@ -217,15 +217,20 @@ class Point {
      */
     public function toString()
     {
-        $time = clone $this->getTime();
-        $time = $time->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s \U\T\C');
+        if ($this->getTime() !== null) {
+            $time = clone $this->getTime();
+            $time = $time->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s \U\T\C');
+        } else {
+            $time = '';
+        }
         return $time . ';' .
-            ($this->getInstruction() ?: '2') . ';' .
+            $this->getInstruction() . ';' .
             $this->getLatitude() . ';' .
             $this->getLongitude() . ';' .
-            $this->getDistance() . ';;' .
+            $this->getDistance() . ';' .
+            $this->getSpeed() . ';' .
             $this->getAltitude() . ';' .
-            ($this->getHeartRate() ?: '') .
-            ';;' . "\n" . '';
+            $this->getHeartRate() . ';' .
+            ';' . "\n";
     }
 }

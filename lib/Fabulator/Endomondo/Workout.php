@@ -100,7 +100,7 @@ class Workout {
     private $distance;
 
     /**
-     * @var array<Point>
+     * @var Point[]
      */
     private $points = [];
 
@@ -135,9 +135,19 @@ class Workout {
     private $title;
 
     /**
-     * @var array
+     * @var string[]
      */
     private $hashtags;
+
+    /**
+     * @var int
+     */
+    private $ascent;
+
+    /**
+     * @var int
+     */
+    private $descent;
 
     /**
      * Create Endomondo workout.
@@ -324,7 +334,7 @@ class Workout {
     /**
      * Set points.
      *
-     * @param $points array<Point>
+     * @param $points Point[]
      */
     public function setPoints($points) {
         $this->points = $points;
@@ -334,13 +344,16 @@ class Workout {
     /**
      * Get points.
      *
-     * @return array<Point>
+     * @return Point[]
      */
     public function getPoints()
     {
         return $this->points;
     }
 
+    /**
+     * @return string
+     */
     public function getPointsAsString()
     {
         $points = '';
@@ -483,7 +496,7 @@ class Workout {
     }
 
     /**
-     * @param $hashtags array
+     * @param $hashtags string[]
      * @return $this
      */
     public function setHastags($hashtags)
@@ -493,11 +506,47 @@ class Workout {
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getHashtags()
     {
         return $this->hashtags;
+    }
+
+    /**
+     * @param $ascent int
+     * @return $this
+     */
+    public function setAscent($ascent)
+    {
+        $this->ascent = $ascent;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAscent()
+    {
+        return $this->ascent;
+    }
+
+    /**
+     * @param $descent int
+     * @return $this
+     */
+    public function setDescent($descent)
+    {
+        $this->descent = $descent;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDescent()
+    {
+        return $this->descent;
     }
 
     /**
