@@ -2,6 +2,10 @@
 
 namespace Fabulator\Endomondo;
 
+/**
+ * Class Workout
+ * @package Fabulator\Endomondo
+ */
 class Workout {
 
     /**
@@ -9,68 +13,13 @@ class Workout {
      */
     private $source;
 
-    private $types = [
-        WorkoutType::RUNNING  => 'Running',
-        WorkoutType::CYCLING_TRANSPORT  => 'Cycling, transport',
-        WorkoutType::CYCLING_SPORT  => 'Cycling, sport',
-        WorkoutType::MOUNTAIN_BIKINGS  => 'Mountain biking',
-        WorkoutType::SKATING  => 'Skating',
-        WorkoutType::ROLLER_SKIING  => 'Roller skiing',
-        WorkoutType::SKIING_CROSS_COUNTRY  => 'Skiing, cross country',
-        WorkoutType::SKIING_DOWNHILL  => 'Skiing, downhill',
-        WorkoutType::SNOWBOARDING  => 'Snowboarding',
-        WorkoutType::KAYAKING  => 'Kayaking',
-        WorkoutType::KITE_SURFING => 'Kite surfing',
-        WorkoutType::ROWING => 'Rowing',
-        WorkoutType::SAILING => 'Sailing',
-        WorkoutType::WINDSURFING => 'Windsurfing',
-        WorkoutType::FINTESS_WALKING => 'Fitness walking',
-        WorkoutType::GOLFING => 'Golfing',
-        WorkoutType::HIKING => 'Hiking',
-        WorkoutType::ORIENTEERING => 'Orienteering',
-        WorkoutType::WALKING => 'Walking',
-        WorkoutType::RIDING => 'Riding',
-        WorkoutType::SWIMMING => 'Swimming',
-        WorkoutType::SPINNING => 'Spinning',
-        WorkoutType::OTHER => 'Other',
-        WorkoutType::AEROBICS => 'Aerobics',
-        WorkoutType::BADMINTON => 'Badminton',
-        WorkoutType::BASEBALL => 'Baseball',
-        WorkoutType::BASKETBALL => 'Basketball',
-        WorkoutType::BOXING => 'Boxing',
-        WorkoutType::CLIMBING_STAIRS => 'Climbing stairs',
-        WorkoutType::CRICKET => 'Cricket',
-        WorkoutType::ELLIPTICAL_TRAINING => 'Elliptical training',
-        WorkoutType::DANCING => 'Dancing',
-        WorkoutType::FENCING => 'Fencing',
-        WorkoutType::FOOTBALL_AMERICAN => 'Football, American',
-        WorkoutType::FOOTBALL_RUGBY => 'Football, rugby',
-        WorkoutType::FOOTBALL_SOCCER => 'Football, soccer',
-        WorkoutType::HANDBALL => 'Handball',
-        WorkoutType::HOCKEY => 'Hockey',
-        WorkoutType::PILATES => 'Pilates',
-        WorkoutType::POLO => 'Polo',
-        WorkoutType::SCUBA_DIVING => 'Scuba diving',
-        WorkoutType::SQUASH => 'Squash',
-        WorkoutType::TABLE_TENIS => 'Table tennis',
-        WorkoutType::TENNIS => 'Tennis',
-        WorkoutType::VOLEYBALL_BEACH => 'Volleyball, beach',
-        WorkoutType::VOLEYBALL_INDOOR => 'Volleyball, indoor',
-        WorkoutType::WEIGHT_TRAINING => 'Weight training',
-        WorkoutType::YOGA => 'Yoga',
-        WorkoutType::MARTINAL_ARTS => 'Martial arts',
-        WorkoutType::GYMNASTICS => 'Gymnastics',
-        WorkoutType::STEP_COUNTER => 'Step counter',
-        WorkoutType::CIRKUIT_TRAINING => 'Circuit Training'
-    ];
-
     /**
      * @var integer
      */
     private $typeId;
 
     /**
-     * @var float
+     * @var integer
      */
     private $calories;
 
@@ -140,12 +89,12 @@ class Workout {
     private $hashtags;
 
     /**
-     * @var int
+     * @var float
      */
     private $ascent;
 
     /**
-     * @var int
+     * @var float
      */
     private $descent;
 
@@ -175,9 +124,9 @@ class Workout {
      */
     public function setTypeId($id)
     {
-        if (!isset($this->types[$id])) {
+        if (!WorkoutType::exist($this->getTypeId())) {
             throw new EndomondoWorkoutException('Unknown workout type');
-        }
+        };
 
         $this->typeId = $id;
         return $this;
@@ -190,13 +139,17 @@ class Workout {
      */
     public function getTypeName()
     {
-        return $this->types[$this->getTypeId()];
+        if ($this->getTypeId()) {
+            return WorkoutType::getName($this->getTypeId());
+        }
+
+        return null;
     }
 
     /**
      * Set number of calories.
      *
-     * @param $calories float
+     * @param $calories integer
      * @return $this
      */
     public function setCalories($calories)
@@ -208,7 +161,7 @@ class Workout {
     /**
      * Get number of calories.
      *
-     * @return float
+     * @return integer
      */
     public function getCalories()
     {
@@ -278,10 +231,19 @@ class Workout {
      */
     public function getEnd()
     {
+        // if end property is defined, use it
         if ($this->end) {
             return $this->end;
         }
 
+        $numberOfPosts = count($this->getPoints());
+
+        // try to find last time of point and use it as end date
+        if ($numberOfPosts > 0 && $this->getPoints()[$numberOfPosts - 1]->getTime()) {
+            return clone $this->getPoints()[$numberOfPosts - 1]->getTime();
+        }
+
+        // if there are no points, calculate end date from duration
         $end = clone $this->getStart();
 
         return $end->add(new \DateInterval('PT' . $this->getDuration() . 'S'));
@@ -335,6 +297,7 @@ class Workout {
      * Set points.
      *
      * @param $points Point[]
+     * @return $this
      */
     public function setPoints($points) {
         $this->points = $points;
@@ -352,6 +315,8 @@ class Workout {
     }
 
     /**
+     * Get array of points as single string.
+     *
      * @return string
      */
     public function getPointsAsString()
@@ -366,6 +331,8 @@ class Workout {
     }
 
     /**
+     * Set avg heart rate.
+     *
      * @param $hr int
      * @return $this
      */
@@ -376,6 +343,8 @@ class Workout {
     }
 
     /**
+     * Get avg heart rate
+     *
      * @return int
      */
     public function getAvgHeartRate()
@@ -384,6 +353,8 @@ class Workout {
     }
 
     /**
+     * Set max heart rate
+     *
      * @param $hr int
      * @return $this
      */
@@ -394,6 +365,8 @@ class Workout {
     }
 
     /**
+     * Get max heart rate
+     *
      * @return int
      */
     public function getMaxHeartRate()
@@ -402,28 +375,8 @@ class Workout {
     }
 
     /**
-     * Set workout Endomondo source
+     * Set notes.
      *
-     * @param $source array
-     * @return $this
-     */
-    public function setSource($source)
-    {
-        $this->source = $source;
-        return $this;
-    }
-
-    /**
-     * Get workout Endomondo source
-     *
-     * @return array
-     */
-    public function getSource()
-    {
-        return $this->source;
-    }
-
-    /**
      * @param $notes string
      * @return $this
      */
@@ -434,6 +387,8 @@ class Workout {
     }
 
     /**
+     * Get notes.
+     *
      * @return string
      */
     public function getNotes()
@@ -442,6 +397,8 @@ class Workout {
     }
 
     /**
+     * Set map privacy, it should be const of Privacy class.
+     *
      * @param $privacy int
      * @return $this
      */
@@ -452,6 +409,8 @@ class Workout {
     }
 
     /**
+     * Get map privacy
+     *
      * @return int
      */
     public function getMapPrivacy()
@@ -460,6 +419,8 @@ class Workout {
     }
 
     /**
+     * Set workout privacy, it should be const of Privacy class.
+     *
      * @param $privacy int
      * @return $this
      */
@@ -470,6 +431,8 @@ class Workout {
     }
 
     /**
+     * Get workout privacy
+     *
      * @return int
      */
     public function getWorkoutPrivacy()
@@ -478,6 +441,8 @@ class Workout {
     }
 
     /**
+     * Set workout title.
+     *
      * @param $title string
      * @return $this
      */
@@ -488,6 +453,8 @@ class Workout {
     }
 
     /**
+     * Get workout title.
+     *
      * @return string
      */
     public function getTitle()
@@ -496,6 +463,8 @@ class Workout {
     }
 
     /**
+     * Set list of hastags
+     *
      * @param $hashtags string[]
      * @return $this
      */
@@ -506,6 +475,20 @@ class Workout {
     }
 
     /**
+     * Add single hashtag.
+     *
+     * @param $hashtag string
+     * @return $this
+     */
+    public function addHastag($hashtag)
+    {
+        $this->hashtags[] = $hashtag;
+        return $this;
+    }
+
+    /**
+     * Get list of hashtags.
+     *
      * @return string[]
      */
     public function getHashtags()
@@ -514,7 +497,9 @@ class Workout {
     }
 
     /**
-     * @param $ascent int
+     * Set ascent.
+     *
+     * @param $ascent float
      * @return $this
      */
     public function setAscent($ascent)
@@ -524,7 +509,9 @@ class Workout {
     }
 
     /**
-     * @return int
+     * Get ascent.
+     *
+     * @return float
      */
     public function getAscent()
     {
@@ -532,7 +519,9 @@ class Workout {
     }
 
     /**
-     * @param $descent int
+     * Set descent.
+     *
+     * @param $descent float
      * @return $this
      */
     public function setDescent($descent)
@@ -542,6 +531,8 @@ class Workout {
     }
 
     /**
+     * Get descent.
+     *
      * @return int
      */
     public function getDescent()
@@ -583,5 +574,27 @@ class Workout {
         }
 
         return $xml->asXML();
+    }
+
+    /**
+     * Set workout Endomondo source
+     *
+     * @param $source array
+     * @return $this
+     */
+    public function setSource($source)
+    {
+        $this->source = $source;
+        return $this;
+    }
+
+    /**
+     * Get workout Endomondo source
+     *
+     * @return array
+     */
+    public function getSource()
+    {
+        return $this->source;
     }
 }

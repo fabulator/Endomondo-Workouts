@@ -2,6 +2,10 @@
 
 namespace Fabulator\Endomondo;
 
+/**
+ * Class WorkoutType
+ * @package Fabulator\Endomondo
+ */
 class WorkoutType {
     const RUNNING = 0;
     const CYCLING_TRANSPORT = 1;
@@ -55,4 +59,93 @@ class WorkoutType {
     const GYMNASTICS = 49;
     const STEP_COUNTER = 50;
     const CIRKUIT_TRAINING = 87;
+
+    /**
+     * @var string[]
+     */
+    const TYPES_NAMES = [
+        self::RUNNING  => 'Running',
+        self::CYCLING_TRANSPORT  => 'Cycling, transport',
+        self::CYCLING_SPORT  => 'Cycling, sport',
+        self::MOUNTAIN_BIKINGS  => 'Mountain biking',
+        self::SKATING  => 'Skating',
+        self::ROLLER_SKIING  => 'Roller skiing',
+        self::SKIING_CROSS_COUNTRY  => 'Skiing, cross country',
+        self::SKIING_DOWNHILL  => 'Skiing, downhill',
+        self::SNOWBOARDING  => 'Snowboarding',
+        self::KAYAKING  => 'Kayaking',
+        self::KITE_SURFING => 'Kite surfing',
+        self::ROWING => 'Rowing',
+        self::SAILING => 'Sailing',
+        self::WINDSURFING => 'Windsurfing',
+        self::FINTESS_WALKING => 'Fitness walking',
+        self::GOLFING => 'Golfing',
+        self::HIKING => 'Hiking',
+        self::ORIENTEERING => 'Orienteering',
+        self::WALKING => 'Walking',
+        self::RIDING => 'Riding',
+        self::SWIMMING => 'Swimming',
+        self::SPINNING => 'Spinning',
+        self::OTHER => 'Other',
+        self::AEROBICS => 'Aerobics',
+        self::BADMINTON => 'Badminton',
+        self::BASEBALL => 'Baseball',
+        self::BASKETBALL => 'Basketball',
+        self::BOXING => 'Boxing',
+        self::CLIMBING_STAIRS => 'Climbing stairs',
+        self::CRICKET => 'Cricket',
+        self::ELLIPTICAL_TRAINING => 'Elliptical training',
+        self::DANCING => 'Dancing',
+        self::FENCING => 'Fencing',
+        self::FOOTBALL_AMERICAN => 'Football, American',
+        self::FOOTBALL_RUGBY => 'Football, rugby',
+        self::FOOTBALL_SOCCER => 'Football, soccer',
+        self::HANDBALL => 'Handball',
+        self::HOCKEY => 'Hockey',
+        self::PILATES => 'Pilates',
+        self::POLO => 'Polo',
+        self::SCUBA_DIVING => 'Scuba diving',
+        self::SQUASH => 'Squash',
+        self::TABLE_TENIS => 'Table tennis',
+        self::TENNIS => 'Tennis',
+        self::VOLEYBALL_BEACH => 'Volleyball, beach',
+        self::VOLEYBALL_INDOOR => 'Volleyball, indoor',
+        self::WEIGHT_TRAINING => 'Weight training',
+        self::YOGA => 'Yoga',
+        self::MARTINAL_ARTS => 'Martial arts',
+        self::GYMNASTICS => 'Gymnastics',
+        self::STEP_COUNTER => 'Step counter',
+        self::CIRKUIT_TRAINING => 'Circuit Training',
+    ];
+
+    /**
+     * Is endomondo workout type defined?
+     *
+     * @param $id
+     * @return bool
+     */
+    static function exist($id)
+    {
+        try {
+            return (bool) self::getName($id);
+        } catch (EndomondoWorkoutException $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Get name of workot in human readable time.
+     *
+     * @param $id int Workout type id
+     * @return string Name of workout
+     * @throws EndomondoWorkoutException when workout type is not defined
+     */
+    static function getName($id)
+    {
+        try {
+            return self::TYPES_NAMES[$id];
+        } catch (\Exception $e) {
+            throw new EndomondoWorkoutException('Unknown workout type', $e->getCode(), $e->getPrevious());
+        }
+    }
 }

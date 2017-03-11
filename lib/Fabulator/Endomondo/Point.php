@@ -2,6 +2,10 @@
 
 namespace Fabulator\Endomondo;
 
+/**
+ * Class Point
+ * @package Fabulator\Endomondo
+ */
 class Point {
 
     /**
@@ -20,7 +24,7 @@ class Point {
     private $longitude;
 
     /**
-     * @var integer
+     * @var float
      */
     private $altitude;
 
@@ -49,6 +53,14 @@ class Point {
      */
     private $instruction;
 
+    /**
+     * @var int
+     */
+    private $cadence;
+
+    /**
+     * Point constructor.
+     */
     public function __construct() { }
 
     /**
@@ -105,7 +117,7 @@ class Point {
     }
 
     /**
-     * @param $altitude integer
+     * @param $altitude float
      * @return $this
      */
     public function setAltitude($altitude)
@@ -115,7 +127,7 @@ class Point {
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getAltitude()
     {
@@ -213,6 +225,24 @@ class Point {
     }
 
     /**
+     * @param $cadence int
+     * @return $this
+     */
+    public function setCadence($cadence)
+    {
+        $this->cadence = $cadence;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCadence()
+    {
+        return $this->cadence;
+    }
+
+    /**
      * @return string
      */
     public function toString()
@@ -231,6 +261,7 @@ class Point {
             $this->getSpeed() . ';' .
             $this->getAltitude() . ';' .
             $this->getHeartRate() . ';' .
-            ';' . "\n";
+            $this->getCadence() . ';' .
+            "\n";
     }
 }
