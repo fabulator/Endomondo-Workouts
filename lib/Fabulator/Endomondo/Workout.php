@@ -19,7 +19,7 @@ class Workout {
     private $typeId;
 
     /**
-     * @var integer
+     * @var float
      */
     private $calories;
 
@@ -124,7 +124,7 @@ class Workout {
      */
     public function setTypeId($id)
     {
-        if (!WorkoutType::exist($this->getTypeId())) {
+        if (!WorkoutType::exist($id)) {
             throw new EndomondoWorkoutException('Unknown workout type');
         };
 
@@ -149,7 +149,7 @@ class Workout {
     /**
      * Set number of calories.
      *
-     * @param $calories integer
+     * @param $calories float
      * @return $this
      */
     public function setCalories($calories)
@@ -161,7 +161,7 @@ class Workout {
     /**
      * Get number of calories.
      *
-     * @return integer
+     * @return float
      */
     public function getCalories()
     {
