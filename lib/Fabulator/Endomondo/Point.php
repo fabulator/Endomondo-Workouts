@@ -68,7 +68,7 @@ class Point {
      * @return $this
      */
     public function setTime(\DateTime $time) {
-        $this->time = $time;
+        $this->time = clone $time;
         return $this;
     }
 
@@ -77,7 +77,7 @@ class Point {
      */
     public function getTime()
     {
-        return $this->time;
+        return clone $this->time;
     }
 
     /**
@@ -135,7 +135,9 @@ class Point {
     }
 
     /**
-     * @param $distance float
+     * Set distance in kilometres.
+     *
+     * @param $distance float in kilometres
      * @return $this
      */
     public function setDistance($distance)
@@ -145,7 +147,9 @@ class Point {
     }
 
     /**
-     * @return float
+     * Get distance in kilometres.
+     *
+     * @return float in kilometres
      */
     public function getDistance()
     {
@@ -153,7 +157,9 @@ class Point {
     }
 
     /**
-     * @param $duration integer
+     * Get duration in seconds
+     *
+     * @param $duration integer in seconds
      * @return $this
      */
     public function setDuration($duration)
@@ -163,7 +169,9 @@ class Point {
     }
 
     /**
-     * @return int
+     * Get duration in seconds
+     *
+     * @return int duration in seconds
      */
     public function getDuration()
     {
@@ -207,6 +215,8 @@ class Point {
     }
 
     /**
+     * Set some start/stop instruction during the workout.
+     *
      * @param $instruction int
      * @return $this
      */
@@ -217,11 +227,13 @@ class Point {
     }
 
     /**
+     * Some start/stop instruction during the workout.
+     *
      * @return int
      */
     public function getInstruction()
     {
-        return $this->instruction;
+        return $this->instruction ?: 2;
     }
 
     /**
@@ -243,13 +255,14 @@ class Point {
     }
 
     /**
+     * Convert point to string readable by Endomondo
+     *
      * @return string
      */
     public function toString()
     {
         if ($this->getTime() !== null) {
-            $time = clone $this->getTime();
-            $time = $time->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s \U\T\C');
+            $time = $this->getTime()->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s \U\T\C');
         } else {
             $time = '';
         }

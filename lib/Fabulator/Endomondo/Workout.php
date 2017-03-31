@@ -24,7 +24,7 @@ class Workout {
     private $calories;
 
     /**
-     * @var integer
+     * @var integer duration in seconds
      */
     private $duration;
 
@@ -44,7 +44,7 @@ class Workout {
     private $id;
 
     /**
-     * @var float
+     * @var float distane in km
      */
     private $distance;
 
@@ -99,6 +99,11 @@ class Workout {
     private $descent;
 
     /**
+     * @var int
+     */
+    private $cadence;
+
+    /**
      * Create Endomondo workout.
      *
      * Workout constructor.
@@ -139,7 +144,7 @@ class Workout {
      */
     public function getTypeName()
     {
-        if ($this->getTypeId()) {
+        if ($this->getTypeId() !== null) {
             return WorkoutType::getName($this->getTypeId());
         }
 
@@ -198,7 +203,7 @@ class Workout {
      */
     public function setStart(\DateTime $start)
     {
-        $this->start = $start;
+        $this->start = clone $start;
         return $this;
     }
 
@@ -209,7 +214,7 @@ class Workout {
      */
     public function getStart()
     {
-        return $this->start;
+        return clone $this->start;
     }
 
     /**
@@ -233,20 +238,18 @@ class Workout {
     {
         // if end property is defined, use it
         if ($this->end) {
-            return $this->end;
+            return clone $this->end;
         }
 
         $numberOfPosts = count($this->getPoints());
 
         // try to find last time of point and use it as end date
-        if ($numberOfPosts > 0 && $this->getPoints()[$numberOfPosts - 1]->getTime()) {
-            return clone $this->getPoints()[$numberOfPosts - 1]->getTime();
+        if ($this->haveGPSData()) {
+            return $this->getPoints()[$numberOfPosts - 1]->getTime();
         }
 
         // if there are no points, calculate end date from duration
-        $end = clone $this->getStart();
-
-        return $end->add(new \DateInterval('PT' . $this->getDuration() . 'S'));
+        return $this->getStart()->add(new \DateInterval('PT' . $this->getDuration() . 'S'));
     }
 
     /**
@@ -312,6 +315,16 @@ class Workout {
     public function getPoints()
     {
         return $this->points;
+    }
+
+    /**
+     * Have workout some GPS data?
+     *
+     * @return bool
+     */
+    public function haveGPSData()
+    {
+        return count($this->getPoints()) > 0 && $this->getPoints()[0]->getLatitude();
     }
 
     /**
@@ -487,6 +500,17 @@ class Workout {
     }
 
     /**
+     * Have workout hastag?
+     *
+     * @param $hashtag string
+     * @return bool
+     */
+    public function haveHashtag($hashtag)
+    {
+        return in_array($hashtag, $this->getHashtags());
+    }
+
+    /**
      * Get list of hashtags.
      *
      * @return string[]
@@ -596,5 +620,31 @@ class Workout {
     public function getSource()
     {
         return $this->source;
+    }
+
+    /**
+     * @param $cadece int
+     * @return $this
+     */
+    public function setCadence($cadece)
+    {
+        $this->cadence = $cadece;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCadece()
+    {
+        return $this->cadence;
+    }
+
+    /**
+     * @return string
+     */
+    public function toString()
+    {
+        return 'Workout "' . $this->getTypeName() . '" was ' . round($this->getDuration() / 60) . 'min long.' . ($this->getDistance() ? (' Distance ' . $this->getDistance() . 'km was achived.') : '') . ' It started at ' . $this->getStart()->format('d.m.Y H:i:s e') . ' and end '. $this->getEnd()->format('d.m.Y H:i:s e') .'.';
     }
 }

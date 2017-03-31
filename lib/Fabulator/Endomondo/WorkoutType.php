@@ -58,6 +58,7 @@ class WorkoutType {
     const MARTINAL_ARTS = 48;
     const GYMNASTICS = 49;
     const STEP_COUNTER = 50;
+    const SKATEBOARDING = 89;
     const CIRKUIT_TRAINING = 87;
 
     /**
@@ -116,6 +117,7 @@ class WorkoutType {
         self::GYMNASTICS => 'Gymnastics',
         self::STEP_COUNTER => 'Step counter',
         self::CIRKUIT_TRAINING => 'Circuit Training',
+        self::SKATEBOARDING => 'Skateboarding',
     ];
 
     /**
