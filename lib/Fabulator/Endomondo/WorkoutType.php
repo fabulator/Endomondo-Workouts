@@ -28,7 +28,11 @@ class WorkoutType {
     const WALKING = 18;
     const RIDING = 19;
     const SWIMMING = 20;
+
+    // @depreciated
     const SPINNING = 21;
+
+    const CYCLING_INDOOR = 21;
     const OTHER = 22;
     const AEROBICS = 23;
     const BADMINTON = 24;
@@ -58,8 +62,26 @@ class WorkoutType {
     const MARTINAL_ARTS = 48;
     const GYMNASTICS = 49;
     const STEP_COUNTER = 50;
-    const SKATEBOARDING = 89;
     const CIRKUIT_TRAINING = 87;
+    const RUNNING_TREADMILL = 88;
+    const SKATEBOARDING = 89;
+    const SURFING = 90;
+    const SNOWSHOEING = 91;
+    CONST WHEELCHAIR = 92;
+    const CLIMBING = 93;
+    const WALKING_TREADMILL = 94;
+    const KICK_SCOOTER = 95;
+    const STAND_UP_PADDLING = 96;
+    const TRAIL_RUNNING = 97;
+    const ROWING_INDOORS = 98;
+    const FLOORBALL = 99;
+    const ICE_SKATING = 100;
+    const SKI_TOURING = 101;
+    const ROPE_JUMPING = 102;
+    const STRETCHING = 103;
+    const CANICROSS = 104;
+    const PADDLE_TENNIS = 105;
+    const PARAGLIDING = 106;
 
     /**
      * @var string[]
@@ -86,7 +108,7 @@ class WorkoutType {
         self::WALKING => 'Walking',
         self::RIDING => 'Riding',
         self::SWIMMING => 'Swimming',
-        self::SPINNING => 'Spinning',
+        self::CYCLING_INDOOR => 'Cycling, Indoor',
         self::OTHER => 'Other',
         self::AEROBICS => 'Aerobics',
         self::BADMINTON => 'Badminton',
@@ -118,6 +140,24 @@ class WorkoutType {
         self::STEP_COUNTER => 'Step counter',
         self::CIRKUIT_TRAINING => 'Circuit Training',
         self::SKATEBOARDING => 'Skateboarding',
+        self::CLIMBING => 'Climbing',
+        self::KICK_SCOOTER => 'Kick scooter',
+        self::CANICROSS => 'Canicross',
+        self::FLOORBALL => 'Floorball',
+        self::ICE_SKATING => 'Ice skating',
+        self::RUNNING_TREADMILL => 'Running (Treadmill)',
+        self::SURFING => 'Surfing',
+        self::SNOWSHOEING => 'Showshoeing',
+        self::WHEELCHAIR => 'Wheelchair',
+        self::WALKING_TREADMILL => 'Walking (Treadmill)',
+        self::STAND_UP_PADDLING => 'Stand up paddling',
+        self::TRAIL_RUNNING => 'Trail running',
+        self::ROWING_INDOORS => 'Rowing (indoors)',
+        self::SKI_TOURING => 'Ski touring',
+        self::ROPE_JUMPING => 'Rope jumping',
+        self::STRETCHING => 'Stretching',
+        self::PADDLE_TENNIS => 'Paddle tennis',
+        self::PARAGLIDING => 'Paragliding',
     ];
 
     /**
