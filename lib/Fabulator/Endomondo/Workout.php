@@ -225,7 +225,7 @@ class Workout {
      */
     public function setEnd(\DateTime $end)
     {
-        $this->end = $end;
+        $this->end = clone $end;
         return $this;
     }
 
@@ -571,6 +571,7 @@ class Workout {
      */
     public function getGPX()
     {
+        // @TODO use some library to generate GPX files
         $xml = new \SimpleXMLElement(
             '<gpx xmlns="http://www.topografix.com/GPX/1/1"'
             . 'xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"'
@@ -582,7 +583,7 @@ class Workout {
 
         foreach ($this->getPoints() as $point) {
             $trkpt = $trkseg->addChild('trkpt');
-            $trkpt->addChild('time', $point->getTime()->format('Y-m-d\TH:i:s\Z'));
+            $trkpt->addChild('time', $point->getTime()->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d\TH:i:s\Z'));
             $trkpt->addAttribute('lat', $point->getLatitude());
             $trkpt->addAttribute('lon', $point->getLongitude());
 
