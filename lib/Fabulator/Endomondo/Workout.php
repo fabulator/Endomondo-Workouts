@@ -66,7 +66,7 @@ class Workout {
     /**
      * @var string
      */
-    private $notes;
+    private $message;
 
     /**
      * @var int
@@ -388,25 +388,25 @@ class Workout {
     }
 
     /**
-     * Set notes.
+     * Set message
      *
-     * @param $notes string
+     * @param $message string
      * @return $this
      */
-    public function setNotes($notes)
+    public function setMessage($message)
     {
-        $this->notes = $notes;
+        $this->message = $message;
         return $this;
     }
 
     /**
-     * Get notes.
+     * Get message
      *
      * @return string
      */
-    public function getNotes()
+    public function getMessage()
     {
-        return $this->notes;
+        return $this->message;
     }
 
     /**
