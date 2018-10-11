@@ -573,8 +573,8 @@ class Workout {
     {
         // @TODO use some library to generate GPX files
         $xml = new \SimpleXMLElement(
-            '<gpx xmlns="http://www.topografix.com/GPX/1/1"'
-            . 'xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"'
+            '<gpx xmlns="http://www.topografix.com/GPX/1/1" '
+            . 'xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" '
             . '/>'
         );
         $trk = $xml->addChild('trk');
